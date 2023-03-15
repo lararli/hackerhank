@@ -2,4 +2,4 @@
 
 
 ### day 01
-![img.png](img.png)
+![img.png](hackerrank_screen.png)
