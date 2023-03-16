@@ -2,7 +2,8 @@
 Find median given an odd length list
 """
 
-def find_median(arr):
+
+def find_median(arr: list) -> int:
     """
     Return the median of a list of odd length
     :param arr:
@@ -16,11 +17,10 @@ def find_median(arr):
 if __name__ == '__main__':
     # fptr = open(os.environ['OUTPUT_PATH'], 'w')
 
-    n = int(input().strip())
-    arr = list(map(int, input().rstrip().split()))
-    result = find_median(arr)
+    n: int = int(input().strip())
+    array: list = list(map(int, input().rstrip().split()))
+    result = find_median(array)
     print(result)
 
     # fptr.write(str(result) + '\n')
-    #
     # fptr.close()
