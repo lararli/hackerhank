@@ -1,8 +1,25 @@
 """
-Calculate the absolute difference between the sums of its diagonals given a square matrix
+The function diagonal_diff takes a square matrix (a list of lists) as an input,
+and returns the absolute difference between the sums of its two diagonals.
+The function first initializes two empty lists,
+left_to_right and right_to_left, which will store the diagonal elements
+from left-to-right and right-to-left, respectively.
+
+Then, the function iterates through each element of the matrix using nested loops,
+and checks if the current element belongs to either diagonal.
+If the element is on the left-to-right diagonal (which corresponds to the indices
+where the row and column numbers are equal), it is added to left_to_right.
+If it is on the right-to-left diagonal
+(which corresponds to the indices where the column number is equal to n - row - 1,
+where n is the size of the matrix and row is the current row index),
+it is added to right_to_left.
+
+After both diagonals have been extracted,
+the function returns the absolute difference between the sums of the two lists.
 """
 
-def diagonal_diff(arr: list) -> object:
+
+def diagonal_diff(arr: list) -> float:
     """
     Given a square matrix, calculate the absolute difference between the sums of its diagonals.
     :rtype: object
@@ -25,20 +42,6 @@ def diagonal_diff(arr: list) -> object:
     print(sum(left_to_right), sum(right_to_left))
     return abs(sum(left_to_right) - sum(right_to_left))
 
-
-
-    #     for _ in range(n):
-    #         print('_', _)
-    #     if arr.index(v) == 0:
-    #         left_to_right.append(v[0])
-    #         right_to_left.append(v[2])
-    #     elif arr.index(v) == 1:
-    #         left_to_right.append(v[1])
-    #         right_to_left.append(v[1])
-    #     elif arr.index(v) == 2:
-    #         left_to_right.append(v[2])
-    #         right_to_left.append(v[0])
-    # print(left_to_right, right_to_left)
 
 if __name__ == '__main__':
     # fptr = open(os.environ['OUTPUT_PATH'], 'w')
