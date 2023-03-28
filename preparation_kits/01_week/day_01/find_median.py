@@ -44,4 +44,3 @@ if __name__ == '__main__':
     array: list = list(map(int, input().rstrip().split()))
     result = find_median(array)
     print(result)
-
