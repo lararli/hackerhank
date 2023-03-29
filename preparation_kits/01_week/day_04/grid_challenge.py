@@ -55,3 +55,4 @@ if __name__ == '__main__':
             grid.append(grid_item)
 
         result = gridChallenge(grid)
+        print(result)
