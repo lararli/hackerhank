@@ -17,7 +17,8 @@ def truckTour(petrolpumps):
     # Loop through each petrol pump in the input list.
     for i in range(len(petrolpumps)):
 
-        # Add the difference between the petrol available at the current petrol pump and the distance to the next petrol pump to the fuel variable.
+        # Add the difference between the petrol available at the current petrol pump and the distance
+        # to the next petrol pump to the fuel variable.
         fuel += petrolpumps[i][0] - petrolpumps[i][1]
 
         # If the fuel is negative, set the starting position to the next petrol pump and reset the fuel to zero.
