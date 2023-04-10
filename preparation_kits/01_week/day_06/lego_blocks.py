@@ -1,58 +1,76 @@
-#!/bin/python3
+"""
+The code solves the "Lego Blocks" challenge from HackerRank,
+which asks to calculate the number of ways to build a wall
+with Lego blocks. The wall can have a variable height and width,
+and the blocks come in four different sizes. However, there is a
+constraint: no two vertical adjacent blocks can have the same length.
 
+The code has three main steps:
+
+Step 1: Compute the number of combinations to build a single row of
+blocks of varying widths (up to the maximum width of the wall).
+As there are only four kinds of block sizes, this step is relatively
+straightforward. The base cases are predefined, and the code uses a loop
+to compute the rest of the combinations, based on the previous four combinations.
+
+Step 2: Compute the total number of combinations to build a wall of
+varying height and width. This step uses the combinations computed in step 1,
+raised to the power of the wall height (the exponentiation is done using the pow()
+function). The result is stored in a list called "total."
+
+Step 3: Compute the number of unstable wall configurations, i.e., walls that
+violate the constraint of having no two vertical adjacent blocks of the same size.
+This is done by dividing the wall into two parts (left and right), and computing the
+number of combinations that have a vertical violation at the border between the two parts.
+This is done for every possible width of the wall, using a loop that goes from 2 to the
+maximum width.
+The results are stored in a list called "unstable."
+
+Finally, the code returns the number of stable wall combinations, i.e.,
+the difference between the total number of wall combinations and the number
+of unstable wall configurations. The result is taken modulo 10^9+7
+to avoid integer overflow.
+"""
 import os
 
 
 
-#
-# Complete the 'legoBlocks' function below.
-#
-# The function is expected to return an INTEGER.
-# The function accepts following parameters:
-#  1. INTEGER n
-#  2. INTEGER m
-#
+def lego_blocks(n: int, m: int) -> int:
+    """
+    Compute the number of ways to build a stable wall of size n x m using lego blocks.
+    :param n: the height of the wall
+    :param m: the width of the wall
+    :return: the number of stable wall combinations modulo 10^9 + 7
+    """
 
-def legoBlocks(n, m):
-    MOD = (10 ** 9 + 7)
+    # Define modulo constant
+    MOD = 10 ** 9 + 7
 
-    # Step 1: O(W)
-    # The number of combinations to build a single row
-    # As only four kinds of sizes, so
-    # base case:
-    # if width is 0, combination is 1
-    # if width is 1, combination is 1
-    # if width is 2, combination is 2
-    # if width is 3, combination is 4
+    # Step 1: Calculate combinations to build a single row
+    # Initialize base case values for width = 0, 1, 2, and 3
     row_combinations = [1, 1, 2, 4]
 
-    # Build row combinations up to current wall's width
+    # Build row combinations up to the given wall width
     while len(row_combinations) <= m:
+        # Add the sum of the previous 4 row combinations mod MOD
         row_combinations.append(sum(row_combinations[-4:]) % MOD)
 
-    # Step 2: O(W)
-    # Compute total combinations
-    # for constructing a wall of height N of varying widths
+    # Step 2: Calculate total combinations for wall of height n
+    # Compute the number of ways to build the entire wall by taking the n-th power of each row combination modulo MOD
     total = [pow(c, n, MOD) for c in row_combinations]
 
-    # Step 3: O(W^2)
-    # Find the number of unstable wall configurations
-    # for a wall of height N of varying widths
-    unstable = [0, 0]
+    # Step 3: Find the number of unstable wall configurations
+    # For each width from 2 to m, calculate the number of unstable wall configurations
+    unstable = [0, 0]  # initialize base case values
 
-    # Divide the wall into left part and right part,
-    # and calculate the combination of left part and right part.
-    # From width is 2, we start to consider about violation.
+    # Iterate over each possible width i of the wall
     for i in range(2, m + 1):
-        # i: current total width
-        # j: left width
-        # i - j: right width
-        # f: (left part - previous vertical violation)*right part
-        f = lambda j: (total[j] - unstable[j]) * total[i - j]
-        result = sum(map(f, range(1, i)))
-        unstable.append(result % MOD)
+        # For each possible left wall width j, calculate the combination of the left and right walls
+        f = lambda j: (total[j] - unstable[j]) * total[i - j]  # calculate the left and right wall combinations
+        result = sum(map(f, range(1, i)))  # sum the combinations of each possible left wall width
+        unstable.append(result % MOD)  # add the unstable configuration to the list
 
-    # Print the number of stable wall combinations
+    # Return the number of stable wall combinations
     return (total[m] - unstable[m]) % MOD
 
 
