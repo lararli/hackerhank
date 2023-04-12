@@ -1,5 +1,9 @@
+# pylint: disable=missing-docstring
 import os
+
+
 class SinglyLinkedListNode:
+    # pylint: disable=too-few-public-methods
     """
     A node in a singly linked list.
 
@@ -20,6 +24,7 @@ class SinglyLinkedListNode:
 
 
 class SinglyLinkedList:
+    # pylint: disable=too-few-public-methods
     """
     A singly linked list.
 
@@ -52,26 +57,26 @@ class SinglyLinkedList:
         self.tail = node
 
 
-def print_singly_linked_list(node, sep=' ', fptr=None):
+def print_singly_linked_list(node, sep=' ', file_obj=None):
     """
     Prints the data stored in the nodes of a singly linked list.
 
     Args:
         node: The first node in the linked list.
         sep: The separator string to use between node data. Defaults to ' '.
-        fptr: The file object to write the output to. Defaults to None.
+        file_obj: The file object to write the output to. Defaults to None.
     """
     while node:
-        if fptr:
-            fptr.write(str(node.data))
+        if file_obj:
+            file_obj.write(str(node.data))
         else:
             print(node.data, end='')
 
         node = node.next
 
         if node:
-            if fptr:
-                fptr.write(sep)
+            if file_obj:
+                file_obj.write(sep)
             else:
                 print(sep, end='')
 
@@ -109,31 +114,30 @@ def merge_lists(head1, head2):
 
     return temp
 
-if __name__ == '__main__':
-    fptr = open(os.environ['OUTPUT_PATH'], 'w')
 
+if __name__ == '__main__':
+    output_path = os.environ['OUTPUT_PATH']
     tests = int(input())
 
-    for tests_itr in range(tests):
-        llist1_count = int(input())
+    with open(output_path, 'w', encoding='utf-8') as fptr:
+        for tests_itr in range(tests):
+            llist1_count = int(input())
 
-        llist1 = SinglyLinkedList()
+            llist1 = SinglyLinkedList()
 
-        for _ in range(llist1_count):
-            llist1_item = int(input())
-            llist1.insert_node(llist1_item)
+            for _ in range(llist1_count):
+                llist1_item = int(input())
+                llist1.insert_node(llist1_item)
 
-        llist2_count = int(input())
+            llist2_count = int(input())
 
-        llist2 = SinglyLinkedList()
+            llist2 = SinglyLinkedList()
 
-        for _ in range(llist2_count):
-            llist2_item = int(input())
-            llist2.insert_node(llist2_item)
+            for _ in range(llist2_count):
+                llist2_item = int(input())
+                llist2.insert_node(llist2_item)
 
-        llist3 = merge_lists(llist1.head, llist2.head)
+            llist3 = merge_lists(llist1.head, llist2.head)
 
-        print_singly_linked_list(llist3, ' ', fptr)
-        fptr.write('\n')
-
-    fptr.close()
+            print_singly_linked_list(llist3, ' ', fptr)
+            fptr.write('\n')

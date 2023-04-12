@@ -25,6 +25,7 @@ player 2 wins (represented by returning 2). Otherwise,
 player 1 wins (represented by returning 1).
 """
 
+
 def tower_breakers(num_towers: int, tower_height: int) -> int:
     """
     Determines which player wins the game of Tower Breakers.
@@ -49,8 +50,7 @@ def tower_breakers(num_towers: int, tower_height: int) -> int:
 
     if tower_height == 1 or num_towers % 2 == 0:
         return 2
-    else:
-        return 1
+    return 1
 
 
 if __name__ == '__main__':
@@ -60,4 +60,4 @@ if __name__ == '__main__':
         first_multiple_input = input().rstrip().split()
         n = int(first_multiple_input[0])
         m = int(first_multiple_input[1])
-        result = towerBreakers(n, m)
+        RESULTS = tower_breakers(n, m)

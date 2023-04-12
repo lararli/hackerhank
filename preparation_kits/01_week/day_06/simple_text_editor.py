@@ -17,6 +17,8 @@ module to make deep copies of the string. Finally, the program executes each
 operation in the "ops" list in the order they were read from the input.
 """
 
+# Import copy module to make deep copies of the string
+from copy import copy
 
 
 # Read number of operations from input
@@ -33,22 +35,21 @@ for i in range(no_ops):
     one_op = input().split(' ')
     ops.append(one_op)
 
-# Import copy module to make deep copies of the string
-from copy import copy
-
 # Initialize a list to store the history of the string
 history = []
 
 # Loop through each operation in ops list
 for op in ops:
 
-    # If the operation is "1", append the given string to s and save the current state of s to history
+    # If the operation is "1", append the given string to s and
+    # save the current state of s to history
     if op[0] == '1':
         to_append = op[1]
         history.append(copy(s))
         s.extend(to_append)
 
-    # If the operation is "2", delete the last k characters from s and save the current state of s to history
+    # If the operation is "2", delete the last k characters from s and save the
+    # state of s to history
     elif op[0] == '2':
         k = int(op[1])
         history.append(copy(s))

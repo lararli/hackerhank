@@ -16,6 +16,7 @@ The function does not modify the original input matrix but only
 computes and returns a value.
 """
 
+
 def flipping_matrix(matrix):
     """
     Given the initial configurations for q matrices, reverse the rows
@@ -40,6 +41,7 @@ def flipping_matrix(matrix):
                 matrix[n_mtx - i - 1][n_mtx - j - 1]
             )
     return sum_values
+
 
 if __name__ == '__main__':
     # fptr = open(os.environ['OUTPUT_PATH'], 'w')

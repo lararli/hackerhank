@@ -28,6 +28,7 @@ tree as input to traverse and print the values of each node in pre-order.
 """
 
 class Node:
+    # pylint: disable=too-few-public-methods
     """
     A class to represent a node in a binary search tree.
 
@@ -77,6 +78,7 @@ class Node:
 
 
 class BinarySearchTree:
+    # pylint: disable=too-few-public-methods
     """
     A class to represent a binary search tree.
 
@@ -145,8 +147,7 @@ def pre_order_traversal(root: Node):
     """
     if root is None:
         return ""
-    else:
-        return str(root.info) + " " + pre_order_traversal(root.left) + pre_order_traversal(root.right)
+    return str(root.info) + " " + pre_order_traversal(root.left) + pre_order_traversal(root.right) # pylint: disable=line-too-long
 
 
 tree = BinarySearchTree()

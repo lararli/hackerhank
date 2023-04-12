@@ -38,8 +38,8 @@ def find_median(arr: list) -> int:
     # Return the median element.
     return arr[index]
 
-if __name__ == '__main__':
 
+if __name__ == '__main__':
     n: int = int(input().strip())
     array: list = list(map(int, input().rstrip().split()))
     result = find_median(array)

@@ -35,59 +35,63 @@ import os
 
 
 
-def lego_blocks(n: int, m: int) -> int:
+def lego_blocks(wall_height: int, wall_width: int) -> int:
     """
-    Compute the number of ways to build a stable wall of size n x m using lego blocks.
-    :param n: the height of the wall
-    :param m: the width of the wall
-    :return: the number of stable wall combinations modulo 10^9 + 7
+    Computes the number of ways to build a stable wall of size n x m using lego blocks.
+
+    Args:
+        wall_height (int): The height of the wall.
+        wall_width (int): The width of the wall.
+
+    Returns:
+    int: The number of stable wall combinations modulo 10^9 + 7.
     """
 
     # Define modulo constant
-    MOD = 10 ** 9 + 7
+    mod = 10 ** 9 + 7
 
     # Step 1: Calculate combinations to build a single row
     # Initialize base case values for width = 0, 1, 2, and 3
     row_combinations = [1, 1, 2, 4]
 
     # Build row combinations up to the given wall width
-    while len(row_combinations) <= m:
+    while len(row_combinations) <= wall_width:
         # Add the sum of the previous 4 row combinations mod MOD
-        row_combinations.append(sum(row_combinations[-4:]) % MOD)
+        row_combinations.append(sum(row_combinations[-4:]) % mod)
 
     # Step 2: Calculate total combinations for wall of height n
-    # Compute the number of ways to build the entire wall by taking the n-th power of each row combination modulo MOD
-    total = [pow(c, n, MOD) for c in row_combinations]
+    # Compute the number of ways to build the entire wall by
+    # taking the n-th power of each row combination modulo MOD
+    total = [pow(c, wall_height, mod) for c in row_combinations]
 
     # Step 3: Find the number of unstable wall configurations
     # For each width from 2 to m, calculate the number of unstable wall configurations
     unstable = [0, 0]  # initialize base case values
 
     # Iterate over each possible width i of the wall
-    for i in range(2, m + 1):
+    for i in range(2, wall_width + 1):
         # For each possible left wall width j, calculate the combination of the left and right walls
-        f = lambda j: (total[j] - unstable[j]) * total[i - j]  # calculate the left and right wall combinations
-        result = sum(map(f, range(1, i)))  # sum the combinations of each possible left wall width
-        unstable.append(result % MOD)  # add the unstable configuration to the list
+        # calculate the left and right wall combinations
+        wall_combinations = lambda j: (total[j] - unstable[j]) * total[i - j]  # pylint: disable=unnecessary-lambda-assignment,cell-var-from-loop
+        # sum the combinations of each possible left wall width
+        result = sum(map(wall_combinations, range(1, i)))
+        unstable.append(result % mod)  # add the unstable configuration to the list
 
     # Return the number of stable wall combinations
-    return (total[m] - unstable[m]) % MOD
+    return (total[wall_width] - unstable[wall_width]) % mod
 
 
 if __name__ == '__main__':
-    fptr = open(os.environ['OUTPUT_PATH'], 'w')
+    with open(os.environ['OUTPUT_PATH'], 'w', encoding='utf-8') as f:
+        t = int(input().strip())
 
-    t = int(input().strip())
+        for t_itr in range(t):
+            first_multiple_input = input().rstrip().split()
 
-    for t_itr in range(t):
-        first_multiple_input = input().rstrip().split()
+            n = int(first_multiple_input[0])
 
-        n = int(first_multiple_input[0])
+            m = int(first_multiple_input[1])
 
-        m = int(first_multiple_input[1])
+            res = lego_blocks(n, m)
 
-        result = legoBlocks(n, m)
-
-        fptr.write(str(result) + '\n')
-
-    fptr.close()
+            f.write(str(res) + '\n')

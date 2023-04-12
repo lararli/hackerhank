@@ -14,17 +14,19 @@ by adding 6 to the distance of their parent node.
 from collections import defaultdict
 import os
 
-def bfs(n, m, edges, s):
+
+def bfs(num_nodes, num_edges, edges, starting_node):
+    # pylint:disable=unused-argument
     """Perform breadth-first search on a graph.
 
     Given a graph represented as a list of edges and a starting vertex s, this function
     performs breadth-first search to determine the shortest distance to all nodes.
 
     Args:
-        n (int): The number of nodes in the graph.
-        m (int): The number of edges in the graph.
+        num_nodes (int): The number of nodes in the graph.
+        num_edges (int): The number of edges in the graph.
         edges (list): A list of tuples representing the edges of the graph.
-        s (int): The starting node for the search.
+        starting_node (int): The starting node for the search.
 
     Returns:
         list: A list of distances from the starting node to all other nodes.
@@ -34,18 +36,18 @@ def bfs(n, m, edges, s):
     graph = defaultdict(list)
 
     # Add edges to the graph
-    for u, v in edges:
-        graph[u].append(v)
-        graph[v].append(u)
+    for start_node, end_node in edges:
+        graph[start_node].append(end_node)
+        graph[end_node].append(start_node)
 
     # Initialize a list to store the distances from s to each node
-    distances = [-1] * n
+    distances = [-1] * num_nodes
 
     # Initialize a queue for BFS
-    queue = [s]
+    queue = [starting_node]
 
     # Distance from starting node to itself is 0
-    distances[s - 1] = 0
+    distances[starting_node - 1] = 0
 
     # Perform BFS
     while queue:
@@ -61,27 +63,24 @@ def bfs(n, m, edges, s):
 
 
 if __name__ == '__main__':
-    fptr = open(os.environ['OUTPUT_PATH'], 'w')
+    with open(os.environ['OUTPUT_PATH'], 'w', encoding='utf-8') as fptr:
+        q = int(input().strip())
 
-    q = int(input().strip())
+        for q_itr in range(q):
+            first_multiple_input = input().rstrip().split()
 
-    for q_itr in range(q):
-        first_multiple_input = input().rstrip().split()
+            n = int(first_multiple_input[0])
 
-        n = int(first_multiple_input[0])
+            m = int(first_multiple_input[1])
 
-        m = int(first_multiple_input[1])
+            edges_list = []
 
-        edges = []
+            for _ in range(m):
+                edges_list.append(list(map(int, input().rstrip().split())))
 
-        for _ in range(m):
-            edges.append(list(map(int, input().rstrip().split())))
+            s = int(input().strip())
 
-        s = int(input().strip())
+            result = bfs(n, m, edges_list, s)
 
-        result = bfs(n, m, edges, s)
-
-        fptr.write(' '.join(map(str, result)))
-        fptr.write('\n')
-
-    fptr.close()
+            fptr.write(' '.join(map(str, result)))
+            fptr.write('\n')

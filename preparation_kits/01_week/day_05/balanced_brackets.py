@@ -10,12 +10,12 @@ function returns 'YES'.
 """
 
 
-def is_balanced(s: str) -> str:
+def is_balanced(brackets: str) -> str:
     """
     Check if the input string contains balanced brackets.
 
     Args:
-        s: A string of brackets.
+        brackets: A string of brackets.
 
     Returns:
         'YES' if the brackets are balanced, 'NO' otherwise.
@@ -23,7 +23,7 @@ def is_balanced(s: str) -> str:
     stack = []
     bracket = {'{': '}', '(': ')', '[': ']'}
 
-    for char in s:
+    for char in brackets:
         if char in ['{', '(', '[']:
             stack.append(char)
         else:
@@ -40,15 +40,7 @@ def is_balanced(s: str) -> str:
 
 
 if __name__ == '__main__':
-    fptr = open(os.environ['OUTPUT_PATH'], 'w')
-
     t = int(input().strip())
-
     for t_itr in range(t):
         s = input()
-
-        result = is_balanced(s)
-
-        fptr.write(result + '\n')
-
-    fptr.close()
+        result = is_balanced(s)  # pylint: disable=invalid-name

@@ -20,36 +20,33 @@ in arr whose difference is k.
 import os
 
 
-def pairs(k, arr):
+def pairs(difference: int, list_arr: list):
     """Returns the number of pairs in `arr` whose difference is `k`.
 
     Args:
-        k (int): The difference to look for.
-        arr (list): The list of integers to search.
+        difference (int): The difference to look for.
+        list_arr (list): The list of integers to search.
 
     Returns:
         int: The number of pairs whose difference is `k`.
     """
-    arr = set(arr)
+    list_arr = set(list_arr)
     count = 0
-    for i in arr:
-        if i + k in arr:
+    for i in list_arr:
+        if i + difference in list_arr:
             count += 1
     return count
 
 if __name__ == '__main__':
-    fptr = open(os.environ['OUTPUT_PATH'], 'w')
+    with open(os.environ['OUTPUT_PATH'], 'w', encoding='utf-8') as fptr:
+        first_multiple_input = input().rstrip().split()
 
-    first_multiple_input = input().rstrip().split()
+        n = int(first_multiple_input[0])
 
-    n = int(first_multiple_input[0])
+        k = int(first_multiple_input[1])
 
-    k = int(first_multiple_input[1])
+        arr = list(map(int, input().rstrip().split()))
 
-    arr = list(map(int, input().rstrip().split()))
+        result = pairs(k, arr)  # pylint: disable=invalid-name
 
-    result = pairs(k, arr)
-
-    fptr.write(str(result) + '\n')
-
-    fptr.close()
+        fptr.write(str(result) + '\n')

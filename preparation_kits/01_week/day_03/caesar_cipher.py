@@ -36,7 +36,7 @@ The resulting encoded string is then returned.
 """
 
 
-def caesar_cipher(st: str, shift_amount: int) -> str:
+def caesar_cipher(string_value: str, shift_amount: int) -> str:
     """
     This function takes a string s and an integer
     shift_amount as input, and returns the Caesar cipher
@@ -56,14 +56,14 @@ def caesar_cipher(st: str, shift_amount: int) -> str:
     str: The encrypted string of s using shift_amount.
 
     Example:
-    >>> caesar_cipher('abc', 1)
+    >>> caesar_cipher('abc',1)
     'bcd'
-    >>> caesar_cipher('XYZ', 3)
+    >>> caesar_cipher('XYZ',3)
     'ABC'
     """
     res = ""
 
-    for char in st:
+    for char in string_value:
         if char.isalpha():
             if char.isupper():
                 shifted_char = chr(ord('A') + (ord(char) - ord('A') + shift_amount) % 26)

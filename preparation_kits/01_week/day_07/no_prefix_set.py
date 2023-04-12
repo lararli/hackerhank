@@ -42,15 +42,15 @@ and returns the root node of the tree.
 
 class Tree:
     """
-    The Tree class represents a tree data structure that is used to check if any prefix of a word in the list
-    matches with any other word in the list.
+    The Tree class represents a tree data structure that is used to
+    check if any prefix of a word in the list matches with any other word in the list.
     """
-    def __init__(self, words):
+    def __init__(self, words_tree):
         """
         Initializes a new instance of the Tree class.
-        :param words: A list of strings representing the words to be checked.
+        :param words_tree: A list of strings representing the words to be checked.
         """
-        self.words = words
+        self.words = words_tree
         self.root = Node(None)
         self.check_for_prefix()
 
@@ -78,35 +78,36 @@ class Tree:
         """
         current = self.root
 
-        for i in range(len(word)):
-            c = word[i]
+        for i, _ in enumerate(word):
+            char = word[i]
 
-            if current.branches[self.index_of(c)] is not None and i == len(word) - 1:
+            if current.branches[self.index_of(char)] is not None and i == len(word) - 1:
                 return word
 
-            if current.branches[self.index_of(c)] is None:
-                current.branches[self.index_of(c)] = Node(c)
+            if current.branches[self.index_of(char)] is None:
+                current.branches[self.index_of(char)] = Node(char)
 
-            if current.branches[self.index_of(c)].is_complete:
+            if current.branches[self.index_of(char)].is_complete:
                 return word
 
             if i == len(word) - 1:
-                current.branches[self.index_of(c)].is_complete = True
+                current.branches[self.index_of(char)].is_complete = True
 
-            current = current.branches[self.index_of(c)]
+            current = current.branches[self.index_of(char)]
 
         return None
 
-    def index_of(self, c):
+    def index_of(self, char):
         """
         Calculates the index of a character in the branches list.
-        :param c: A character whose index is to be calculated.
+        :param char: A character whose index is to be calculated.
         :return: The index of the character.
         """
-        return ord(c) - 97
+        return ord(char) - 97
 
 
 class Node:
+    # pylint: disable=too-few-public-methods
     """
     The Node class represents a node in the tree.
     """
@@ -120,14 +121,14 @@ class Node:
         self.branches = [None] * (ord("j") - ord("a") + 1)
 
 
-def noPrefix(words):
+def no_prefix(words_to_check):
     """
     Checks if any prefix of a word in the list matches with any other word in the list.
     If a prefix match is found, it prints "BAD SET" and the word causing the issue.
     Otherwise, it prints "GOOD SET".
-    :param words: A list of strings representing the words to be checked.
+    :param words_to_check: A list of strings representing the words to be checked.
     """
-    root = Tree(words)
+    Tree(words_to_check)
 
 
 if __name__ == '__main__':
@@ -139,4 +140,4 @@ if __name__ == '__main__':
         words_item = input()
         words.append(words_item)
 
-    noPrefix(words)
+    no_prefix(words)

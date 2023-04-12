@@ -17,7 +17,8 @@ The function counts the number of bribes and updates the queue accordingly. If a
 more than two positions forward, the function returns 'Too chaotic'.
 """
 
-def minimumBribes(q):
+
+def minimum_bribes(array_int):
     """
     Takes an array q representing the original order of people in a queue and
     returns the minimum number of bribes that took place to reach the current order of the queue
@@ -30,19 +31,23 @@ def minimumBribes(q):
     None if the queue is too chaotic, otherwise the minimum number of bribes as an integer.
 
     """
-    bribe: int = 0 # initialize bribe count to 0
-    for i in range(len(q)-1, 0, -1): # iterate over the queue from end to beginning
-        if q[i] != i + 1: # check if current person is in their original position
-            if q[i-1] == i + 1: # check if current person has moved one position forward
-                bribe += 1 # increase bribe count by 1
-                q[i-1], q[i] = q[i], q[i-1] # swap the positions of the two people
-            elif q[i - 2] == i + 1: # check if current person has moved two positions forward
-                bribe += 2 # increase bribe count by 2
-                q[i - 2], q[i-1], q[i] = q[i-1], q[i], q[i-2] # swap the positions of the three people
+    bribe: int = 0  # initialize bribe count to 0
+    for i in range(len(array_int) - 1, 0, -1):  # iterate over the queue from end to beginning
+        if array_int[i] != i + 1:  # check if current person is in their original position
+            if array_int[i - 1] == i + 1:  # check if current person has moved one position forward
+                bribe += 1  # increase bribe count by 1
+                #  swap the positions of the two people
+                array_int[i - 1], array_int[i] = array_int[i], array_int[i - 1]
+            # check if current person has moved two positions forward
+            elif array_int[i - 2] == i + 1:
+                bribe += 2  # increase bribe count by 2
+                #  swap the positions of the three people
+                array_int[i - 2], array_int[i - 1], array_int[i] = array_int[i - 1], array_int[i], array_int[i - 2]  # pylint: disable=C0301
             else:
-                print('Too chaotic') # if the current person has moved more than two positions forward, it is too chaotic
-                return # exit the function
-    print(bribe) # print the number of bribes
+                # if the current person has moved more than two positions forward, it is too chaotic
+                print('Too chaotic')
+                return  # exit the function
+    print(bribe)  # print the number of bribes
 
 
 if __name__ == '__main__':
@@ -53,4 +58,4 @@ if __name__ == '__main__':
 
         q = list(map(int, input().rstrip().split()))
 
-        minimumBribes(q)
+        minimum_bribes(q)

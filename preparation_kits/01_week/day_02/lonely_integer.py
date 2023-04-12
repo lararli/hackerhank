@@ -10,6 +10,7 @@ If no such element is found, the function returns None.
 """
 from typing import Union
 
+
 def lonely_integer(arr: list) -> Union[int, None]:
     """
     Given an array of integers, where all elements but one occur twice, find the unique element.
@@ -20,6 +21,7 @@ def lonely_integer(arr: list) -> Union[int, None]:
         if arr.count(value) == 1:
             return value
     return None
+
 
 if __name__ == '__main__':
     n = int(input().strip())

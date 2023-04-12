@@ -25,8 +25,8 @@ def time_conversion(hour: str) -> str:
     """
     Given a time in 12-hour AM/PM format, convert it to military (24-hour) time.
     :type hour: string
-    :param hour: the time in 12 hour format
-    :return: the time in 24 hour format
+    :param hour: the time in 12-hour format
+    :return: the time in 24-hour format
     """
     if hour.endswith('PM') and hour.startswith('12'):
         return hour[:-2]

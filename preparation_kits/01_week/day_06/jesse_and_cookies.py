@@ -52,68 +52,67 @@ import os
 from typing import List
 
 
-def cookies(k: int, A: List[int]) -> int:
+def cookies(minimum_req: int, array_int: List[int]) -> int:
     """
     Calculates the minimum number of times cookies should be combined to make
-    a sweetness greater than or equal to the required minimum sweetness k.
+    a sweetness greater than or equal to the required minimum sweetness.
 
-    :param k: The minimum sweetness required.
-    :type k: int
-    :param A: An array of integers representing the sweetness of each cookie.
-    :type A: List[int]
-    :return: The minimum number of times cookies should be combined to make a sweetness
-        greater than or equal to the required minimum sweetness k.
-    :rtype: int
+    Args:
+    k (int): The minimum sweetness required.
+    A (List[int]): An array of integers representing the sweetness of each cookie.
+
+    Returns:
+    int: The minimum number of times cookies should be combined to make a sweetness
+    greater than or equal to the required minimum sweetness.
     """
-    A = sorted(A, reverse=True)
+    array_int = sorted(array_int, reverse=True)
     count = 0
     temp = []
-    l = 0
+    length = 0
 
     # While there is at least one cookie in A with sweetness less than k,
     # and temp array contains at least one cookie with sweetness less than k,
     # we continue to combine the cookies.
-    while A and A[-1] < k or temp and temp[l] < k:
-        if len(A) + len(temp[l:l + 2]) < 2:
-            count = -1  # If there are not enough cookies to combine, set count to -1.
-            break
-        else:
+    while array_int and array_int[-1] < minimum_req or temp and temp[length] < minimum_req:
+        if len(temp[length:length + 2]) >= 2:
             count += 1
             # We create two arrays to contain the two least sweet cookies to be combined.
-            # a0 contains the least sweet cookies in A and a1 contains the least sweet cookies in temp.
-            a0 = []
-            for num, i in enumerate(range(min(2, len(A)))):
-                a0.append((A[-num - 1], 0))
-            a1 = []
-            tmp = temp[l:l + 2]
+            # least_sweet_cookies_a contains the least sweet cookies in A and
+            # least_sweet_cookies_temp contains the least sweet cookies in temp.
+            least_sweet_cookies_a = []  # pyling: disable=invalid-name
+            for num, i in enumerate(range(min(2, len(array_int)))):
+                least_sweet_cookies_a.append((array_int[-num - 1], 0))
+            least_sweet_cookies_temp = []
+            tmp = temp[length:length + 2]
             for num, i in enumerate(range(min(2, len(tmp)))):
-                a1.append((tmp[num], 1))
-            # We combine the two least sweet cookies from a0 and a1 to make a new cookie with sweetness
+                least_sweet_cookies_temp.append((tmp[num], 1))
+            # We combine the two least sweet cookies from
+            # least_sweet_cookies and least_sweet_cookies_temp to make a new cookie with sweetness
             # equal to the sum of the two least sweet cookies.
             # We pop the two least sweet cookies from their respective arrays.
-            b = sorted(a0 + a1, key=lambda x: x[0])[:2]
+            new_sweet_cookies = sorted(least_sweet_cookies_a + least_sweet_cookies_temp, key=lambda x: x[0])[:2]  # pylint: disable=line-too-long
             for i in range(2):
-                if b[i][1] == 0:
-                    A.pop()
+                if new_sweet_cookies[i][1] == 0:
+                    array_int.pop()
                 else:
-                    l += 1
-            temp.append(b[0][0] + b[1][0] * 2)
+                    length += 1
+            temp.append(new_sweet_cookies[0][0] + new_sweet_cookies[1][0] * 2)
+        else:
+            count = -1  # If there are not enough cookies to combine, set count to -1.
+            break
     return count
 
 
 if __name__ == '__main__':
-    fptr = open(os.environ['OUTPUT_PATH'], 'w')
+    with open(os.environ['OUTPUT_PATH'], 'w', encoding='utf-8') as fptr:
+        first_multiple_input = input().rstrip().split()
 
-    first_multiple_input = input().rstrip().split()
+        n = int(first_multiple_input[0])
 
-    n = int(first_multiple_input[0])
+        k = int(first_multiple_input[1])
 
-    k = int(first_multiple_input[1])
+        A = list(map(int, input().rstrip().split()))
 
-    A = list(map(int, input().rstrip().split()))
+        result = cookies(k, A)  # pylint: disable=invalid-name
 
-    result = cookies(k, A)
-
-    fptr.write(str(result) + '\n')
-
-    fptr.close()
+        fptr.write(str(result) + '\n')

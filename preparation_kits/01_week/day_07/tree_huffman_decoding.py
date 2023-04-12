@@ -29,24 +29,35 @@ in the array to obtain the decompressed data.
 
 import queue as Queue
 
-cntr = 0
+CNTR = 0
 
 class Node:
-    def __init__(self, freq, data):
+    # pylint: disable=too-few-public-methods
+    """
+    A class representing a node in a binary tree.
+
+    Attributes:
+        freq (int): The frequency of the node.
+        data (str): The data contained in the node.
+        left (Node): The left child of the node.
+        right (Node): The right child of the node.
+        _count (int): The order in which the node was created.
+    """
+    def __init__(self, frequency, data):
         """
         Initializes a Node with its frequency and data.
 
         Args:
-            freq (int): The frequency of the node.
+            frequency (int): The frequency of the node.
             data (str): The data contained in the node.
         """
-        self.freq = freq
+        self.freq = frequency
         self.data = data
         self.left = None
         self.right = None
-        global cntr
-        self._count = cntr
-        cntr = cntr + 1
+        global CNTR # pylint: disable=global-statement
+        self._count = CNTR
+        CNTR = CNTR + 1
 
     def __lt__(self, other):
         """
@@ -62,57 +73,57 @@ def huffman_hidden():
     """
     Builds the Huffman tree using a priority queue and returns the root of the tree.
     """
-    q = Queue.PriorityQueue()
+    priority_queue = Queue.PriorityQueue()
 
-    for key in freq:
-        q.put((freq[key], key, Node(freq[key], key)))
+    for char in freq:  # pylint: disable=consider-using-dict-items
+        priority_queue.put((freq[char], char, Node(freq[char], char)))
 
-    while q.qsize() != 1:
-        a = q.get()
-        b = q.get()
-        obj = Node(a[0] + b[0], '\0')
-        obj.left = a[2]
-        obj.right = b[2]
-        q.put((obj.freq, obj.data, obj))
+    while priority_queue.qsize() != 1:
+        left = priority_queue.get()
+        right = priority_queue.get()
+        parent = Node(left[0] + right[0], '\0')
+        parent.left = left[2]
+        parent.right = right[2]
+        priority_queue.put((parent.freq, parent.data, parent))
 
-    root = q.get()
-    root = root[2]  # contains root object
-    return root
+    root_of_tree = priority_queue.get()
+    root_of_tree = root_of_tree[2]  # contains root object
+    return root_of_tree
 
 
 def dfs_hidden(obj, already):
     """
     Performs depth-first search on the Huffman tree to obtain the binary code for each character.
     """
-    if (obj == None):
+    if obj is None:
         return
-    elif (obj.data != '\0'):
+    if obj.data != '\0':
         code_hidden[obj.data] = already
 
     dfs_hidden(obj.right, already + "1")
     dfs_hidden(obj.left, already + "0")
 
 
-def decodeHuff(root, s):
+def decode_huff(root_of_tree, input_str):
     """
     Decodes the input string `s` using the Huffman tree with root `root`.
 
     Args:
-        root (Node): The root of the Huffman tree.
-        s (str): The input string to be decoded.
+        root_of_tree (Node): The root of the Huffman tree.
+        input_str (str): The input string to be decoded.
     """
-    cur = root
+    cur = root_of_tree
     chararray = []
 
-    for c in s:
-        if c == '0' and cur.left:
+    for char in input_str:
+        if char == '0' and cur.left:
             cur = cur.left
         elif cur.right:
             cur = cur.right
 
         if cur.left is None and cur.right is None:
             chararray.append(cur.data)
-            cur = root
+            cur = root_of_tree
 
     # Print final array
     print("".join(chararray))
@@ -121,10 +132,10 @@ def decodeHuff(root, s):
 ip = input()
 freq = {}  # maps each character to its frequency
 
-cntr = 0
+CNTR = 0
 
 for ch in ip:
-    if (freq.get(ch) == None):
+    if freq.get(ch) is None:
         freq[ch] = 1
     else:
         freq[ch] += 1
@@ -139,9 +150,9 @@ if len(code_hidden) == 1:  # if there is only one character in the i/p
     for key in code_hidden:
         code_hidden[key] = "0"
 
-toBeDecoded = ""
+to_be_decoded = "" # pylint: disable=invalid-name
 
 for ch in ip:
-    toBeDecoded += code_hidden[ch]
+    to_be_decoded += code_hidden[ch]
 
-decodeHuff(root, toBeDecoded)
+decode_huff(root, to_be_decoded)
