@@ -175,8 +175,8 @@ def insert_node_at_position(head, new_node_data, node_position):
         node.next = temp.next
         temp.next = node
 
-    # return the head node of the updated linked list
-    return head
+
+    return head  # return the head node of the updated linked list
 
 
 if __name__ == '__main__':

@@ -76,8 +76,8 @@ class LinkedList:
 
 
 if __name__ == "__main__":
-    # Create a new instance of the LinkedList class
-    ll = LinkedList()
+
+    ll = LinkedList()  # Create a new instance of the LinkedList class
 
     # Insert three new nodes with data 1, 2, and 3 into the list
     ll.insert(1)
