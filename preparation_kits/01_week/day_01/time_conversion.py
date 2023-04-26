@@ -37,8 +37,3 @@ def time_conversion(hour: str) -> str:
     hour_in_military_time = str(int(hour[:2]) + 12) + hour[2:8]
     return hour_in_military_time
 
-
-if __name__ == '__main__':
-    s = input()
-    result = time_conversion(s)
-    print(result)

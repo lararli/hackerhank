@@ -78,4 +78,8 @@ class TestTimeConversion:
         time_to_convert: str = '15:00:00AM'
         assert time_conversion(time_to_convert) == '15:00:00'
 
+    def test_time_conversion_pm_12(self):
+        time_to_convert: str = '12:00:00PM'
+        assert time_conversion(time_to_convert) == '12:00:00'
+
 

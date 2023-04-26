@@ -41,23 +41,3 @@ def flipping_matrix(matrix):
                 matrix[n_mtx - i - 1][n_mtx - j - 1]
             )
     return sum_values
-
-
-if __name__ == '__main__':
-    # fptr = open(os.environ['OUTPUT_PATH'], 'w')
-
-    q = int(input().strip())
-
-    for q_itr in range(q):
-        n = int(input().strip())
-
-        mtx = []
-
-        for _ in range(2 * n):
-            mtx.append(list(map(int, input().rstrip().split())))
-
-        result = flipping_matrix(mtx)
-
-    #     fptr.write(str(result) + '\n')
-    #
-    # fptr.close()

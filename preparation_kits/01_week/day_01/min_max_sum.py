@@ -50,8 +50,3 @@ def min_max_sum(arr: list) -> tuple:
 
     # Print a tuple containing the minimum and maximum sums.
     return min_sum, max_sum
-
-
-if __name__ == '__main__':
-    array = list(map(int, input().rstrip().split()))
-    print(min_max_sum(array))

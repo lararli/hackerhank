@@ -36,8 +36,9 @@ def counting_sort(arr):
         '3 2 3 0 0 3 0 ... 0'
 
     """
+
     # Create a list of size 100 with all elements set to 0.
-    count = [0] * 100
+    count = [0] * 20
 
     # Iterate through each element in the input array and increment the count of
     # the corresponding index in the count list.
@@ -50,8 +51,3 @@ def counting_sort(arr):
     # Join the elements of the res list with a space separator and return the resulting string.
     return ' '.join(res)
 
-
-if __name__ == '__main__':
-    n = int(input().strip())
-    a = list(map(int, input().rstrip().split()))
-    print(counting_sort(a))

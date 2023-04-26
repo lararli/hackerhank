@@ -75,18 +75,3 @@ class LinkedList:
             return
         self.reversePrint(node.next)
         print(node.data)
-
-
-if __name__ == "__main__":
-
-    ll = LinkedList()  # Create a new instance of the LinkedList class
-
-    # Insert three new nodes with data 1, 2, and 3 into the list
-    ll.insert(1)
-    ll.insert(2)
-    ll.insert(3)
-    ll.insert(None)
-
-    # Print the data of the nodes in the list in reverse order, starting from the head node
-    ll.reversePrint(ll.head)
-

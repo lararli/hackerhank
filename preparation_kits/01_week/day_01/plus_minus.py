@@ -48,11 +48,3 @@ def plus_minus(arr: list) -> list:
 
     return result
 
-if __name__ == '__main__':
-    # size of array
-    n = int(input().strip())
-
-    # array
-    array = list(map(int, input().rstrip().split()))
-
-    plus_minus(array)

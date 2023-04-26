@@ -22,9 +22,3 @@ def lonely_integer(arr: list) -> Union[int, None]:
             return value
     return None
 
-
-if __name__ == '__main__':
-    n = int(input().strip())
-    a = list(map(int, input().rstrip().split()))
-    result = lonely_integer(a)
-    print(result)
