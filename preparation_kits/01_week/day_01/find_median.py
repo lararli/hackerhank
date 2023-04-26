@@ -30,6 +30,9 @@ def find_median(arr: list) -> int:
 
     """
     # Sort the input list in ascending order.
+
+    if len(arr) % 2 == 0 or len(arr) == 0:
+        raise ValueError('Input list must have an odd length.')
     arr.sort()
 
     # Calculate the index of the median element in the sorted list.

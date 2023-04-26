@@ -22,5 +22,4 @@ def test_invalid_input():
 
     for num, arr in invalid_inputs:
         with pytest.raises(TypeError):
-            print(num, arr)
             replicate_list(num, arr)

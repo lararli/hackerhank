@@ -23,7 +23,7 @@ the input array as an argument.
 """
 
 
-def plus_minus(arr: list) -> None:
+def plus_minus(arr: list) -> list:
     """
     Given an array of integers, calculate the ratios of its elements
     that are positive, negative, and zero.
@@ -41,9 +41,12 @@ def plus_minus(arr: list) -> None:
             count_neg += 1
 
     ratios = [count_pos, count_neg, count_zero]
+    result = []
+    n = len(arr)
     for value in ratios:
-        print(f'{value/n:.6f}')
+        result.append(f'{value/n:.6f}')
 
+    return result
 
 if __name__ == '__main__':
     # size of array
