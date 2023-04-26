@@ -54,6 +54,8 @@ class LinkedList:
             data (Any): The data to be stored in the new node.
         """
         new_node = Node(data)
+        if data is None:
+            raise ValueError('Cannot insert a None node in the linked list. Please provide a valid node object.')
         if self.head is None:
             self.head = new_node
         else:
@@ -83,6 +85,7 @@ if __name__ == "__main__":
     ll.insert(1)
     ll.insert(2)
     ll.insert(3)
+    ll.insert(None)
 
     # Print the data of the nodes in the list in reverse order, starting from the head node
     ll.reversePrint(ll.head)
