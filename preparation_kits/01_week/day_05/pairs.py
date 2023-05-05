@@ -36,17 +36,3 @@ def pairs(difference: int, list_arr: list):
         if i + difference in list_arr:
             count += 1
     return count
-
-if __name__ == '__main__':
-    with open(os.environ['OUTPUT_PATH'], 'w', encoding='utf-8') as fptr:
-        first_multiple_input = input().rstrip().split()
-
-        n = int(first_multiple_input[0])
-
-        k = int(first_multiple_input[1])
-
-        arr = list(map(int, input().rstrip().split()))
-
-        result = pairs(k, arr)  # pylint: disable=invalid-name
-
-        fptr.write(str(result) + '\n')

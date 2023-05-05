@@ -16,7 +16,7 @@ and append them to stackdelete. Finally, if the query type is 3, it prints
 the top element of stackdelete without removing it.
 """
 
-def queue_two_stacks(num_queries: int, stackpush: list, stackdelete: list):
+def queue_two_stacks(stack_list: list, num_queries: int, stackpush: list, stackdelete: list):
     """Simulates a queue using two stacks.
 
     Args:
@@ -28,7 +28,6 @@ def queue_two_stacks(num_queries: int, stackpush: list, stackdelete: list):
         str: Resulting queue of each query.
     """
     for _ in range(num_queries):
-        stack_list = list(input().split())
         # enqueue
         if stack_list[0] == '1':
             stackpush.append(stack_list[1])

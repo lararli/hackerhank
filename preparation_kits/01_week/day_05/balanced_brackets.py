@@ -37,10 +37,3 @@ def is_balanced(brackets: str) -> str:
                 return 'NO'
 
     return 'NO' if stack else 'YES'
-
-
-if __name__ == '__main__':
-    t = int(input().strip())
-    for t_itr in range(t):
-        s = input()
-        result = is_balanced(s)  # pylint: disable=invalid-name
