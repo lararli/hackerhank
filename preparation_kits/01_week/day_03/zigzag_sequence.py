@@ -25,7 +25,7 @@ input array and its length as arguments.
 """
 
 
-def find_zigzag_sequence(list_value: list, len_list: int) -> None:
+def find_zigzag_sequence(list_value: list) -> list:
     """
     Sorts the input list in a zigzag sequence and prints it.
 
@@ -41,6 +41,7 @@ def find_zigzag_sequence(list_value: list, len_list: int) -> None:
           and then alternatingly swapping the rightmost and leftmost
           elements of the remaining elements.
     """
+    len_list = len(list_value)
     list_value.sort()
 
     # The middle element of a sorted list is swapped with the last element.
@@ -55,17 +56,4 @@ def find_zigzag_sequence(list_value: list, len_list: int) -> None:
         end -= 1
 
     # The sorted list in zigzag sequence is printed.
-    print(*list_value)
-
-
-if __name__ == '__main__':
-    # The number of test cases is read from standard input.
-    test_cases = int(input())
-
-    for _ in range(test_cases):
-        # The length and elements of the input list are read from standard input.
-        n = int(input())
-        str_value = list(map(int, input().split()))
-
-        # The zigzag sequence of the input list is obtained and printed.
-        find_zigzag_sequence(str_value, n)
+    return list_value

@@ -74,10 +74,3 @@ def caesar_cipher(string_value: str, shift_amount: int) -> str:
             res += char
 
     return res
-
-
-if __name__ == '__main__':
-    n = int(input().strip())
-    s = input()
-    k = int(input().strip())
-    result = caesar_cipher(s, k)

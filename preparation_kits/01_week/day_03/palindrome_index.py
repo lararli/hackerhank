@@ -77,10 +77,3 @@ def palindrome_index(string_value: str):
                 return len_str - i - 1
 
     return -1
-
-
-if __name__ == '__main__':
-    q = int(input().strip())
-    for q_itr in range(q):
-        s = input()
-        result = palindrome_index(s)
