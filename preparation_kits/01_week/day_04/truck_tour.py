@@ -34,17 +34,3 @@ def truck_tour(petrol_pumps):
     # Return the starting position from where the truck can complete the full circle.
     return position
 
-
-if __name__ == '__main__':
-    # Read the number of petrol pumps from the input.
-    n = int(input().strip())
-
-    # Initialize an empty list to store the petrol pumps.
-    petrolpumps = []
-
-    # Read the petrol pumps from the input and append them to the list.
-    for _ in range(n):
-        petrolpumps.append(list(map(int, input().rstrip().split())))
-
-    # Call the truckTour function to find the index of the starting petrol pump.
-    result = truck_tour(petrolpumps)

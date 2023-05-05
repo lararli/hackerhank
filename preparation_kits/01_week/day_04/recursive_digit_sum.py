@@ -19,7 +19,7 @@ up its digits and recursively applying this process until a single-digit number 
 It then multiplies this result by k and repeats the process until a final super digit is obtained.
 """
 
-def superDigit(n: str, k: int) -> str:
+def super_digit(n: str, k: int) -> str:
     """
     Calculates the super digit of n*k.
 
@@ -30,6 +30,7 @@ def superDigit(n: str, k: int) -> str:
     Returns:
         str: A string representing the super digit of n*k.
     """
+    print(f'n: {n}, k: {k}')
 
     def helper(n: str) -> str:
         """
@@ -61,14 +62,3 @@ def superDigit(n: str, k: int) -> str:
 
     # Call helper function to calculate super digit of p and return result
     return helper(p)
-
-
-if __name__ == '__main__':
-    first_multiple_input = input().rstrip().split()
-
-    n = first_multiple_input[0]
-
-    k = int(first_multiple_input[1])
-
-    result = superDigit(n, k)
-    print(result)

@@ -30,6 +30,9 @@ def grid_challenge(grid_value):
     """
 
     # Convert the grid of strings to a 2D list of characters
+    same_length = all(len(x) == len(grid_value[0]) for x in grid_value)
+    if not same_length:
+        raise ValueError('All elements in the list must have the same length')
     grid_value = [list(row) for row in grid_value]
 
     # Sort each row in non-decreasing order
@@ -43,18 +46,3 @@ def grid_challenge(grid_value):
                 return "NO"
 
     return "YES"
-
-
-if __name__ == '__main__':
-    t = int(input().strip())
-    for t_itr in range(t):
-        n = int(input().strip())
-
-        grid = []
-
-        for _ in range(n):
-            grid_item = input()
-            grid.append(grid_item)
-
-        RESULT = grid_challenge(grid)
-        print(RESULT)
