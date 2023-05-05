@@ -60,27 +60,3 @@ def bfs(num_nodes, num_edges, edges, starting_node):
 
     # Return the list of distances
     return distances
-
-
-if __name__ == '__main__':
-    with open(os.environ['OUTPUT_PATH'], 'w', encoding='utf-8') as fptr:
-        q = int(input().strip())
-
-        for q_itr in range(q):
-            first_multiple_input = input().rstrip().split()
-
-            n = int(first_multiple_input[0])
-
-            m = int(first_multiple_input[1])
-
-            edges_list = []
-
-            for _ in range(m):
-                edges_list.append(list(map(int, input().rstrip().split())))
-
-            s = int(input().strip())
-
-            result = bfs(n, m, edges_list, s)
-
-            fptr.write(' '.join(map(str, result)))
-            fptr.write('\n')

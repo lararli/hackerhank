@@ -79,19 +79,3 @@ def lego_blocks(wall_height: int, wall_width: int) -> int:
 
     # Return the number of stable wall combinations
     return (total[wall_width] - unstable[wall_width]) % mod
-
-
-if __name__ == '__main__':
-    with open(os.environ['OUTPUT_PATH'], 'w', encoding='utf-8') as f:
-        t = int(input().strip())
-
-        for t_itr in range(t):
-            first_multiple_input = input().rstrip().split()
-
-            n = int(first_multiple_input[0])
-
-            m = int(first_multiple_input[1])
-
-            res = lego_blocks(n, m)
-
-            f.write(str(res) + '\n')
