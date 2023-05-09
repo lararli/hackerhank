@@ -29,130 +29,88 @@ in the array to obtain the decompressed data.
 
 import queue as Queue
 
-CNTR = 0
 
-class Node:
-    # pylint: disable=too-few-public-methods
-    """
-    A class representing a node in a binary tree.
+def huffman_hidden(freq):
+    cntr = 0
 
-    Attributes:
-        freq (int): The frequency of the node.
-        data (str): The data contained in the node.
-        left (Node): The left child of the node.
-        right (Node): The right child of the node.
-        _count (int): The order in which the node was created.
-    """
-    def __init__(self, frequency, data):
-        """
-        Initializes a Node with its frequency and data.
+    class Node:
+        def __init__(self, freq, data):
+            self.freq = freq
+            self.data = data
+            self.left = None
+            self.right = None
+            nonlocal cntr
+            self._count = cntr
+            cntr += 1
 
-        Args:
-            frequency (int): The frequency of the node.
-            data (str): The data contained in the node.
-        """
-        self.freq = frequency
-        self.data = data
-        self.left = None
-        self.right = None
-        global CNTR # pylint: disable=global-statement
-        self._count = CNTR
-        CNTR = CNTR + 1
+        def __lt__(self, other):
+            if self.freq != other.freq:
+                return self.freq < other.freq
+            return self._count < other._count
 
-    def __lt__(self, other):
-        """
-        Defines the less than (<) operator for comparison of two nodes.
-        Used to prioritize nodes in the priority queue.
-        """
-        if self.freq != other.freq:
-            return self.freq < other.freq
-        return self._count < other._count
+    q = Queue.PriorityQueue()
+
+    for key in freq:
+        q.put((freq[key], key, Node(freq[key], key)))
+
+    while q.qsize() != 1:
+        a = q.get()
+        b = q.get()
+        obj = Node(a[0] + b[0], '\0')
+        obj.left = a[2]
+        obj.right = b[2]
+        q.put((obj.freq, obj.data, obj))
+
+    root = q.get()
+    root = root[2]  # contains root object
+    return root
 
 
-def huffman_hidden():
-    """
-    Builds the Huffman tree using a priority queue and returns the root of the tree.
-    """
-    priority_queue = Queue.PriorityQueue()
-
-    for char in freq:  # pylint: disable=consider-using-dict-items
-        priority_queue.put((freq[char], char, Node(freq[char], char)))
-
-    while priority_queue.qsize() != 1:
-        left = priority_queue.get()
-        right = priority_queue.get()
-        parent = Node(left[0] + right[0], '\0')
-        parent.left = left[2]
-        parent.right = right[2]
-        priority_queue.put((parent.freq, parent.data, parent))
-
-    root_of_tree = priority_queue.get()
-    root_of_tree = root_of_tree[2]  # contains root object
-    return root_of_tree
-
-
-def dfs_hidden(obj, already):
-    """
-    Performs depth-first search on the Huffman tree to obtain the binary code for each character.
-    """
+def dfs_hidden(obj, already, code_hidden):
     if obj is None:
         return
-    if obj.data != '\0':
+    elif obj.data != '\0':
         code_hidden[obj.data] = already
 
-    dfs_hidden(obj.right, already + "1")
-    dfs_hidden(obj.left, already + "0")
+    dfs_hidden(obj.right, already + "1", code_hidden)
+    dfs_hidden(obj.left, already + "0", code_hidden)
 
 
-def decode_huff(root_of_tree, input_str):
-    """
-    Decodes the input string `s` using the Huffman tree with root `root`.
-
-    Args:
-        root_of_tree (Node): The root of the Huffman tree.
-        input_str (str): The input string to be decoded.
-    """
-    cur = root_of_tree
-    chararray = []
-
-    for char in input_str:
-        if char == '0' and cur.left:
-            cur = cur.left
-        elif cur.right:
-            cur = cur.right
-
-        if cur.left is None and cur.right is None:
-            chararray.append(cur.data)
-            cur = root_of_tree
-
-    # Print final array
-    print("".join(chararray))
+def decodeHuff(root, s):
+    current = root
+    result = ''
+    for code in s:
+        if int(code) == 0:
+            current = current.left
+        else:
+            current = current.right
+        if current.left is None and current.right is None:
+            result += current.data
+            current = root
+    return result
 
 
-ip = input()
-freq = {}  # maps each character to its frequency
+def execute_decodeHuff(ip: str):
+    freq = {}
 
-CNTR = 0
+    for ch in ip:
+        if freq.get(ch) is None:
+            freq[ch] = 1
+        else:
+            freq[ch] += 1
 
-for ch in ip:
-    if freq.get(ch) is None:
-        freq[ch] = 1
-    else:
-        freq[ch] += 1
+    root = huffman_hidden(freq)
+    code_hidden = {}
+    dfs_hidden(root, "", code_hidden)
 
-root = huffman_hidden()  # contains root of huffman tree
+    if len(code_hidden) == 1:
+        for key in code_hidden:
+            code_hidden[key] = "0"
 
-code_hidden = {}  # contains code for each object
+    toBeDecoded = ""
 
-dfs_hidden(root, "")
+    for ch in ip:
+        toBeDecoded += code_hidden[ch]
 
-if len(code_hidden) == 1:  # if there is only one character in the i/p
-    for key in code_hidden:
-        code_hidden[key] = "0"
-
-to_be_decoded = "" # pylint: disable=invalid-name
-
-for ch in ip:
-    to_be_decoded += code_hidden[ch]
-
-decode_huff(root, to_be_decoded)
+    return decodeHuff(root, toBeDecoded)
+    # assert decoded_str == "abcde"

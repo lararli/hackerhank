@@ -1,6 +1,6 @@
 import pytest
 from balanced_brackets import is_balanced
-from linked_list import print_singly_linked_list, merge_lists, SinglyLinkedList, SinglyLinkedListNode
+from linked_list_mod import print_singly_linked_list, merge_lists, SinglyLinkedList
 from pairs import pairs
 from queue_two_stacks import queue_two_stacks
 import io

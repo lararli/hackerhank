@@ -40,104 +40,38 @@ of words as an input parameter, creates a Tree object with the list of words,
 and returns the root node of the tree.
 """
 
-class Tree:
-    """
-    The Tree class represents a tree data structure that is used to
-    check if any prefix of a word in the list matches with any other word in the list.
-    """
-    def __init__(self, words_tree):
-        """
-        Initializes a new instance of the Tree class.
-        :param words_tree: A list of strings representing the words to be checked.
-        """
-        self.words = words_tree
-        self.root = Node(None)
-        self.check_for_prefix()
+root = {}
 
-    def check_for_prefix(self):
-        """
-        Checks if any prefix of a word in the list matches with any other word in the list.
-        If a prefix match is found, it prints "BAD SET" and the word causing the issue.
-        Otherwise, it prints "GOOD SET".
-        """
-        for word in self.words:
-            answer = self.insert(word)
 
-            if answer is not None:
-                print("BAD SET")
-                print(answer)
-                return
+def add_to(root, s):
+    current_node = root.setdefault(s[0], [0, {}])
+    if len(s) == 1:
+        current_node[0] += 1
+    else:
+        add_to(current_node[1], s[1:])
 
+
+def is_prefix(root, s):
+    if len(s) == 1:
+        if len(root[s[0]][1]) > 0 or root[s[0]][0] > 1:
+            return True
+        else:
+            return False
+    else:
+        if root[s[0]][0] > 0:
+            return True
+        else:
+            return is_prefix(root[s[0]][1], s[1:])
+
+
+def execute_process(list_of_words: list):
+    count = 0
+    for word in list_of_words:
+        add_to(root, word)
+        if is_prefix(root, word):
+            print('BAD SET')
+            print(word)
+            break
+        count += 1
+    if count == len(list_of_words):
         print("GOOD SET")
-
-    def insert(self, word):
-        """
-        Inserts a word into the tree.
-        :param word: A string representing the word to be inserted.
-        :return: None if the insertion is successful; otherwise, the word that caused the issue.
-        """
-        current = self.root
-
-        for i, _ in enumerate(word):
-            char = word[i]
-
-            if current.branches[self.index_of(char)] is not None and i == len(word) - 1:
-                return word
-
-            if current.branches[self.index_of(char)] is None:
-                current.branches[self.index_of(char)] = Node(char)
-
-            if current.branches[self.index_of(char)].is_complete:
-                return word
-
-            if i == len(word) - 1:
-                current.branches[self.index_of(char)].is_complete = True
-
-            current = current.branches[self.index_of(char)]
-
-        return None
-
-    def index_of(self, char):
-        """
-        Calculates the index of a character in the branches list.
-        :param char: A character whose index is to be calculated.
-        :return: The index of the character.
-        """
-        return ord(char) - 97
-
-
-class Node:
-    # pylint: disable=too-few-public-methods
-    """
-    The Node class represents a node in the tree.
-    """
-    def __init__(self, value):
-        """
-        Initializes a new instance of the Node class.
-        :param value: The value of the node.
-        """
-        self.value = value
-        self.is_complete = False
-        self.branches = [None] * (ord("j") - ord("a") + 1)
-
-
-def no_prefix(words_to_check):
-    """
-    Checks if any prefix of a word in the list matches with any other word in the list.
-    If a prefix match is found, it prints "BAD SET" and the word causing the issue.
-    Otherwise, it prints "GOOD SET".
-    :param words_to_check: A list of strings representing the words to be checked.
-    """
-    Tree(words_to_check)
-
-
-if __name__ == '__main__':
-    n = int(input().strip())
-
-    words = []
-
-    for _ in range(n):
-        words_item = input()
-        words.append(words_item)
-
-    no_prefix(words)

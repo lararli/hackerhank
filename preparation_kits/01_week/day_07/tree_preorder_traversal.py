@@ -151,11 +151,9 @@ def pre_order_traversal(root: Node):
 
 
 tree = BinarySearchTree()
-t = int(input())
 
-arr = list(map(int, input().split()))
+def execute_pre_order_traversal(arr: list[int]):
+    for i in range(len(arr)):
+        tree.create(arr[i])
 
-for i in range(t):
-    tree.create(arr[i])
-
-print(pre_order_traversal(tree.root))
+    return pre_order_traversal(tree.root)
