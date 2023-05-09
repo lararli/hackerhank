@@ -11,8 +11,8 @@ def test_valid_input(capfd):
     captured = capfd.readouterr()
     assert captured.out == "1\n1\n2\n2\n3\n3\n"
 
-def test_invalid_input():
 
+def test_invalid_input():
     invalid_inputs = [
         ('2', [1, 2, 3]),
         (1, '234'),

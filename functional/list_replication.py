@@ -44,6 +44,3 @@ def replicate_list(num: int, arr: list[int]) -> None:
         list_values = str(value) * num
         for num_str in list_values:
             print(num_str)
-
-
-# replicate_list(2, [1, 2, 3, 4])
